@@ -1,12 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, {Component} from 'react';
+import ReactDom from 'react-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Header from './components/header';
+import NewsList from './components/news_list';
+import Footer from './components/footer';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import '../src/styles/styles.scss';
+import JSON from  './db.json';
+
+class App extends Component {
+    
+    constructor() {
+        super()
+        this.state = {
+            news: JSON,
+            footerText: "Footer Text",
+            filtered: []
+        }
+    }
+
+    getKeywords = (event) => {
+        let keywords = event.target.value;
+        let filtered = this.state.news.filter((item) => {
+            return item.title.indexOf(keywords) > -1;
+        })
+        this.setState({
+            filtered
+        })
+    }
+
+    render() {
+        console.log(this.state)
+        return (
+            <>
+            <Header keywords={this.getKeywords}/>
+            <NewsList news={this.state.filtered.length === 0 ? this.state.news: this.state.filtered}/>
+            <Footer footertext={this.state.footerText}/>
+            </>
+        )
+    }
+}
+
+ReactDom.render(<App/>, document.getElementById("root"));

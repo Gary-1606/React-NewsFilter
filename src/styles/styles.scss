@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+}
+header {
+    background-color: lightblue;
+    &.active {
+        background: lightseagreen;
+    }
+    .logo {
+        color: white;
+        font-size: 20px;
+        text-align: center;
+    }
+}
+footer {
+    background-color: lightblue;
+}
